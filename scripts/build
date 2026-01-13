@@ -1,0 +1,5 @@
+#!/bin/env bash
+
+docker build \
+  --no-cache \
+  -t tarantool-run:3.6 .
