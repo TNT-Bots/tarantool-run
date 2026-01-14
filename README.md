@@ -54,7 +54,7 @@
   2. Рекурсивно загрузить submodules
 
       ```bash
-      git submodule update --remote --merge --recursive
+      git submodule update --init --remote --merge --recursive
       ```
   3. Выполнить сборку образа
 
