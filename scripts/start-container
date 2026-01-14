@@ -1,0 +1,21 @@
+#!/bin/env bash
+set -euo pipefail
+
+export $(grep -v '^#' .env | xargs)
+
+readonly INSTANCE_NAME="bot-instance"
+readonly BOT_DIR="$(pwd)/instances.enabled/${INSTANCE_NAME}"
+
+# Проверка переменных
+: "${BOT_TOKEN:?Environment variable BOT_TOKEN must be set}"
+: "${IMAGE_NAME:?Environment variable IMAGE_NAME must be set}"
+
+docker run -d \
+  --name ${CONTAINER_NAME} \
+  --restart unless-stopped \
+  -p 9091:9091 \
+  -v "${BOT_DIR}:/opt/tarantool/instances.enabled/${INSTANCE_NAME}" \
+  -v "${BOT_DIR}/.rocks:/opt/tarantool/instances.enabled/${INSTANCE_NAME}/.rocks" \
+  -e BOT_TOKEN="${BOT_TOKEN:-}" \
+  -e TT_LOG_LEVEL="${TT_LOG_LEVEL:-error}" \
+  ${IMAGE_NAME}:latest

@@ -3,6 +3,66 @@
 >[!NOTE]
 >На текущий момент запуск приложения через docker находится в бете.
 
-#### Скрипты:
-- [./scripts/build](scripts/build) - Соберёт контейнер с именем `tarantool-run:3.6`
-- [./scripts/build](scripts/start-test) - Запуск подготовленного теста. Нужна установленная переменная окружения `BOT_TOKEN`
+В качестве submodule пример [pro-tnt-bot](https://github.com/TNT-Bots/pro-tnt-bot) вынесен в instances.enabled/bot-instance.
+
+----
+
+### Скрипты:
+
+  - [./scripts/build](scripts/build) - Сборка образа (image).
+  - [./scripts/start-dev](scripts/start-dev) - Запускает временный контейнер и после завершения удаляет.
+  - [./scripts/start-container](scripts/start-container) - Запускает постоянный контейнер.
+
+----
+
+### Переменные окружения
+
+>[!NOTE]
+>Заполните файл `.env` необходимыми переменными.
+
+  - `BOT_TOKEN` - Токен бота.
+  - `BOT_CREATOR_ID` - Идентификатор создателя.
+  - `BOT_USERNAME` - Юзернейм бота, без `@`.
+
+----
+
+### Решение проблем
+
+1. Частые пересборки контейнера
+      Ошибка вида:
+      ```
+      Warning: Failed searching manifest: Failed downloading http://rocks.tarantool.org/manifest - failed downloading http://rocks.tarantool.org/manifest
+      ```
+
+      Означает что `rocks.tarantool.org` ограничил вам загрузку с вашего IP. 
+
+      Заработает через несколько часов/дней.
+      
+      Чтобы не переустанавливать каждый раз пакеты, прокидывайте `.rocks` в контейнер и пользуйтесь проверками вида:
+      ```bash
+      # Не установит пакет, если он ранее был установлен
+      source "$(dirname "$0")/tnt-tg-bot/scripts/lib/customize.sh"
+      source "$(dirname "$0")/tnt-tg-bot/scripts/lib/tt-tools.sh"
+      
+      # Установка argp версии 1.1-0
+      install_luarocks "argp" "1.1-0"
+      ```
+
+### Запуск
+
+  1. Установить `BOT_TOKEN` в файле `.env`
+  2. Рекурсивно загрузить submodules
+
+      ```bash
+      git submodule update --remote --merge --recursive
+      ```
+  3. Выполнить сборку образа
+
+      ```bash
+      bash scripts/build
+      ```
+  4. Запустить контейнер
+
+      ```bash
+      bash scripts/start-dev
+      ```

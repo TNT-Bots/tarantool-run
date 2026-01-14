@@ -1,0 +1,3 @@
+[submodule "instances.enabled/bot-instance"]
+	path = instances.enabled/bot-instance
+	url = https://github.com/TNT-Bots/pro-tnt-bot.git

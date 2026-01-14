@@ -1,5 +1,8 @@
 #!/bin/env bash
 
+readonly IMAGE_NAME="tnt-bot"
+readonly TAG="latest"
+
 docker build \
   --no-cache \
-  -t tarantool-run:3.6 .
+  -t ${IMAGE_NAME}:${TAG} .
