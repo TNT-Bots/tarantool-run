@@ -11,11 +11,6 @@ echo "-----------------"
 ls -la
 echo "-----------------"
 
-# if [ -f "./tnt-tg-bot/tnt-tg-bot.pre-build.sh" ]; then
-#   chmod +x ./tnt-tg-bot/tnt-tg-bot.pre-build.sh
-#   ./tnt-tg-bot/tnt-tg-bot.pre-build.sh
-# fi
-
 if [ -f "./app.pre-build.sh" ]; then
   echo "Installed dependencies..."
 
@@ -25,5 +20,5 @@ fi
 echo "Starting application..."
 
 exec tarantool \
-  --name instance001 \
-  --config config.yaml
+    --name instance001 \
+    --config config.yaml

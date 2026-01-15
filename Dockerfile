@@ -25,9 +25,9 @@ RUN \
 
 WORKDIR ${BOT_INSTANCE_SRC}
 
-EXPOSE 9091
-
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
+
+EXPOSE 9091
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
