@@ -7,15 +7,15 @@
 
 ----
 
-### Скрипты:
+**Скрипты**
 
-  - [./scripts/build](scripts/build) - Сборка образа (image).
-  - [./scripts/start-dev](scripts/start-dev) - Запускает временный контейнер и после завершения удаляет.
-  - [./scripts/start-container](scripts/start-container) - Запускает постоянный контейнер.
+  - [./bin/build](bin/build) - Сборка образа (image).
+  - [./bin/start-dev](bin/start-dev) - Запускает временный контейнер и после завершения удаляет.
+  - [./bin/start-container](bin/start-container) - Запускает постоянный контейнер.
 
 ----
 
-### Переменные окружения
+**Переменные окружения**
 
 >[!NOTE]
 >Заполните файл `.env` необходимыми переменными.
@@ -26,29 +26,29 @@
 
 ----
 
-### Решение проблем
+**Решение проблем**
 
 1. Частые пересборки контейнера
-      Ошибка вида:
-      ```
-      Warning: Failed searching manifest: Failed downloading http://rocks.tarantool.org/manifest - failed downloading http://rocks.tarantool.org/manifest
+    Ошибка вида:
+    ```
+    Warning: Failed searching manifest: Failed downloading http://rocks.tarantool.org/manifest - failed downloading http://rocks.tarantool.org/manifest
+    ```
+
+    Означает что `rocks.tarantool.org` ограничил вам загрузку с вашего IP. 
+
+    Заработает через несколько часов/дней.
+    
+    Чтобы не переустанавливать каждый раз пакеты, прокидывайте `.rocks` в контейнер и пользуйтесь проверками вида:
+    ```bash
+    # Не установит пакет, если он ранее был установлен
+    source "$(dirname "$0")/tnt-tg-bot/scripts/lib/customize.sh"
+    source "$(dirname "$0")/tnt-tg-bot/scripts/lib/tt-tools.sh"
+    
+    # Установка argp версии 1.1-0
+    install_luarocks "argp" "1.1-0"
       ```
 
-      Означает что `rocks.tarantool.org` ограничил вам загрузку с вашего IP. 
-
-      Заработает через несколько часов/дней.
-      
-      Чтобы не переустанавливать каждый раз пакеты, прокидывайте `.rocks` в контейнер и пользуйтесь проверками вида:
-      ```bash
-      # Не установит пакет, если он ранее был установлен
-      source "$(dirname "$0")/tnt-tg-bot/scripts/lib/customize.sh"
-      source "$(dirname "$0")/tnt-tg-bot/scripts/lib/tt-tools.sh"
-      
-      # Установка argp версии 1.1-0
-      install_luarocks "argp" "1.1-0"
-      ```
-
-### Запуск
+**Запуск**
 
   1. Установить `BOT_TOKEN` в файле `.env`
   2. Рекурсивно загрузить submodules

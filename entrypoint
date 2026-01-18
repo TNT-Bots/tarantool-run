@@ -20,5 +20,5 @@ fi
 echo "Starting application..."
 
 exec tarantool \
-    --name instance001 \
-    --config config.yaml
+  --name instance001 \
+  --config config.yaml
